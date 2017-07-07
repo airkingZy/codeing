@@ -1,0 +1,50 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+<nav class="register-nav">
+    <div class="chose-btn">
+        <a href="/register" class="active">注册</a>
+        <span>·</span>
+        <a href="/login">登录</a>
+    </div>
+    <br>
+    <p class="jc-tips"><span class="fa fa-exclamation"></span>错误信息</p>
+    <div class="re-user-box">
+        <input type="text" id="shownam" placeholder="你的昵称">
+        <span class="fa fa-user-circle"></span>
+        <input type="text" id="usenmae" placeholder="登录账号">
+        <span class="fa fa-link"></span>
+        <input type="password" id="pw" placeholder="登录密码" style="border: none">
+        <span class="fa fa-lock"></span>
+        <span class="fa fa-check shownam-check" ></span>
+        <span class="fa fa-check usename-check" ></span>
+        <span class="fa fa-check pw-check" ></span>
+
+    </div>
+
+    <div class="sub-box">
+        <a href="javascript:;" class="sub-btn" id="reg-sub-btn">注册</a>
+    </div>
+    <p class="register-tip">
+        点击 “注册” 即表示您同意并愿意遵守简书
+        <br>
+        <a href="###">用户协议</a>
+        和
+        <a href="###">隐私协议</a>
+    </p>
+
+    <p class="shejiao">社交用户直接登录</p>
+    <div class="sj-box">
+        <span class="fa fa-qq"></span>
+        <span class="fa fa-weibo"></span>
+        <span class="fa fa-wechat"></span>
+    </div>
+</nav>
+<nav class="mask-nav">
+    <p><img src="/images/redeye.png" alt=""></p>
+    <p>注册成功，去 <a href="/login">登录</a>吧</p>
+</nav>
+
+<% include footer-2.html %>

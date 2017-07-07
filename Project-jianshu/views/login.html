@@ -1,0 +1,40 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+<nav class="register-nav">
+    <div class="chose-btn">
+        <a href="/register" >注册</a>
+        <span>·</span>
+        <a href="/login" class="active">登录</a>
+    </div>
+    <br>
+    <p class="jc-tips"><span class="fa fa-exclamation"></span>错误信息</p>
+    <div class="re-user-box">
+        <input type="text" id="login-usenmae" placeholder="登录账号">
+        <span class="fa fa-link"></span>
+        <input type="password" id="login-pw" placeholder="登录密码" style="border: none">
+        <span class="fa fa-lock"></span>
+
+    </div>
+
+
+    <p class="register-tip">
+        <a href="">登录遇到问题？</a>
+        <br>
+
+    </p>
+    <div class="sub-box login-btn-box">
+        <a href="javascript:;" class="sub-btn" id="login-sub-btn">登录</a>
+    </div>
+    <p class="shejiao">社交用户直接登录</p>
+    <div class="sj-box">
+        <span class="fa fa-qq"></span>
+        <span class="fa fa-weibo"></span>
+        <span class="fa fa-wechat"></span>
+    </div>
+</nav>
+
+
+<% include footer-2.html %>

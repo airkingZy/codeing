@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--视口宽度为设备宽度，不能缩放-->
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <!--qq浏览器下强制横盘或者竖屏显示-->
+    <meta name="x5-orientation" content="portrait" />
+    <!--qq浏览器下是否可以全屏-->
+    <meta name="x5-fullscreen" content="true" />
+    <!--UC浏览器下强制横盘或者竖屏显示-->
+    <meta name="screen-orientation" content="portrait">
+    <!--UC浏览器下是否可以全屏-->
+    <meta name="full-screen" content="yes">
+    <!--是否禁止识别手机和邮箱-->
+    <meta name="format-detection" content="telephone=yes, email=no" />
+    <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/reset.css" type="text/css">
+    <script src="/javascripts/jquery.min.js"></script>
+
+    <title>Title</title>
+    <script>
+        (function(){
+            var html = document.documentElement;
+            var hWidth = html.getBoundingClientRect().width;
+            html.style.fontSize = hWidth/15 + "px";
+
+        })();
+    </script>
+

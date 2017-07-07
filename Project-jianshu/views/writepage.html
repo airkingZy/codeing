@@ -1,0 +1,56 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+<nav class="write-page">
+    <input type="text" class="page-title" placeholder="文章标题" id="page-title">
+
+    <h2 class="page-img" style="opacity: 0;display: none"><%= title %></h2>
+    <div class="page-box">
+        <p>文章配图</p>
+        <img src="" alt="" id="pageimg">
+    </div>
+    <form id='editfile' method='post' action='/pageupload' enctype='multipart/form-data'>
+        <!--<input name="text" type="text"/>-->
+        <input name="avatar" id='upfile' type='file' style="border: none"/>
+        <input type='submit' value='上传' id="first-sub" style="border: none"/>
+    </form>
+    <p>文章内容</p>
+    <textarea name="" id="con-text"  cols="30">
+
+    </textarea>
+
+    <input type="button" id="page-sub" value="发表">
+</nav>
+<script>
+    if (window.location.pathname.split('/')[1]=='pageupload'){
+//                    alert(1)
+        $('#pageimg').attr('src',/images/+$('.page-img').text())
+        $('#btn').click(function () {
+            $.ajax({
+                type:'get',
+                url:"/pagetestol",
+                data:{"uid":sessionStorage.getItem('userid'),"zuozhe":sessionStorage.getItem('showname'),"con":$('#con-text').val(),"conimg":$('#pageimg').attr("src").split('/')[2]},
+                dataType:"json",
+                success:function (str) {
+                    console.log(str);
+                }
+            })
+        })
+    }
+    $('#page-sub').click(function () {
+        $.ajax({
+            type:"get",
+            url:"/pagetestol",
+            data:{"uid":sessionStorage.getItem('userid'),"zuozhe":sessionStorage.getItem('showname'),"con":$('#con-text').val(),"conimg":$('#pageimg').attr("src").split('/')[2],"title":$('#page-title').val()},
+            dataType:"json",
+            success:function (str) {
+                console.log(str)
+                window.location.href='/home'
+            }
+        })
+    })
+
+</script>
+<% include footer-2.html %>

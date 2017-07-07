@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <!--<form id='editfile' method='post' action='/upload' enctype='multipart/form-data'>-->
+      <!--<input name="text" type="text"/>-->
+      <!--选择图片：<input name="avatar" id='upfile' type='file'/>-->
+      <!--<input type='submit' value='提交'/>-->
+    <!--</form>-->
+    选择图片：<input name="avatar" id='upfile' type='file'/>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+
+  <script>
+    var formdata = new FormData();
+      $('#upfile').change(function () {
+          formdata.append( 'file',$('#upfile')[0].files);
+          console.log( $('#upfile')[0].files);
+          $.ajax({
+              type:'post',
+              url:'/upload',
+              data:{"data":formdata},
+              dataType:"json",
+              success:function (str) {
+                  console.log(str)
+              }
+          })
+      })
+  </script>
+</html>

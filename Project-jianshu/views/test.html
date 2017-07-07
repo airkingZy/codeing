@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/javascripts/jquery.min.js"></script>
+
+</head>
+<body>
+<input type="button" id="btn">
+</body>
+<script>
+    $('#btn').click(function () {
+        $.ajax({
+            type:'get',
+            url:"/pagetestol",
+            data:{"uid":"1","zuozhe":"13","con":"1231313","conimg":"132131"},
+            dataType:"json",
+            success:function (str) {
+                console.log(str);
+            }
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,71 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+
+<nav id="re-user-con">
+    <div class="re-user-img">
+        <img src="" alt="" id="re-uesr-img">
+    </div>
+    <form id='editfile' method='post' action='/upload' enctype='multipart/form-data'>
+        <!--<input name="text" type="text"/>-->
+        <input name="avatar" id='upfile' type='file'/>
+        <input type='submit' value='上传' id="first-sub"/>
+        <span class="fa fa-plus"></span>
+    </form>
+    昵称：<input type="text" id="re-user-showname"><br>
+    密码：<input type="password" placeholder="输入新密码，不输入默认原设定密码" id="re-user-pw"><br>
+    邮箱：<input type="text" placeholder="新的邮箱"  id="re-user-mail"><br>
+    电话：<input type="text" placeholder="新的电话" id="re-user-phone"><br>
+    <input type="button" value="提交" class="re-sub">
+
+</nav>
+<h1 id="re-name" style="opacity: 0"><%= title %></h1>
+
+<script>
+    var islogin=sessionStorage.getItem('islogin');
+    var userid=sessionStorage.getItem('userid');
+
+    if (islogin==1){
+
+        $.ajax({
+            type:'get',
+            url:'/setuser',
+            data:{"uid":userid},
+            dataType:"json",
+            success:function (str) {
+                console.log(str)
+                $('#re-uesr-img').attr('src',/images/+str.result[0].userimg)
+                $('#re-user-showname').val(str.result[0].showname)
+                $('#re-user-pw').val(str.result[0].password)
+                $('#re-user-mail').val(str.result[0].email)
+                $('#re-user-phone').val(str.result[0].phone)
+                console.log( $('#re-user-pw').val())
+                if (window.location.pathname.split('/')[1]=='upload'){
+//                    alert(1)
+                    $('#re-uesr-img').attr('src',/images/+$('#re-name').text())
+
+                }
+            }
+        })
+    }
+    console.log(window.location.pathname.split('/')[1]);
+
+    $('.re-sub').click(function () {
+        var uid = sessionStorage.getItem('userid')
+        $.ajax({
+            type:'post',
+            url:'/updatauser',
+            data:{"showname": $('#re-user-showname').val(),"password": $('#re-user-pw').val(),"userimg":$('#re-uesr-img').attr("src").split('/')[2],"email": $('#re-user-mail').val(), "phone": $('#re-user-phone').val(),"uid":uid},
+            dataType:"json",
+            success:function (str) {
+                console.log(str)
+                window.location.href='/home';
+            }
+        })
+        console.log(  $('#re-uesr-img').attr("src").split('/')[2]);
+    })
+
+</script>
+<% include footer.html %>

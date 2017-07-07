@@ -1,0 +1,122 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+<div class="header-menu clearfix">
+    <div class="right-menu">
+        <ul>
+            <li>随时随地发现和创作内容</li>
+            <li>每天为你精选好文</li>
+            <li>第一时间收到作者文章更新</li>
+        </ul>
+    </div>
+    <div class="left-img">
+        <img src="/images/index_phone-e47b04f8b57ad885770ec579c4341259.png" alt="">
+    </div>
+</div>
+<div class="search-box clearfix">
+    <div class="search-form">
+        <input type="text" id="search-text" placeholder="输入你感兴趣的内容">
+        <a href="" class="search-btn">    <span class="fa fa-search"></span>
+        </a>
+    </div>
+
+</div>
+<div class="title">
+<p class="title-text">热门专题</p>
+</div>
+<div class="tags-box">
+    <ul class="tags-list clearfix">
+        <li><a href="">短篇小说</a></li>
+        <li><a href="">旅行。在路上</a></li>
+        <li><a href="">上班这点事</a></li>
+        <li><a href="">连载小说</a></li>
+        <li><a href="">黛玉日报</a></li>
+        <li><a href="">@IT 互联网</a></li>
+        <li><a href="">诗</a></li>
+        <li><a href="">青春</a></li>
+
+    </ul>
+</div>
+<div class="title">
+    <p class="title-text">热门文章</p>
+</div>
+
+<nav class="text-con">
+    <ul class="text-list">
+
+    </ul>
+    <div class="morelist">
+        <a href="javascript:;" class="more-btn">展开更多文章 <span class="fa fa-chevron-down"></span></a>
+    </div>
+</nav>
+<script>
+    $(function () {
+        var StrHtml='<li class="text-item clearfix"><p class="user-con clearfix"> <img  class="user-img" src="" alt=""> <span class="user-name">地天宇</span> </p><div class="items-text "> <div class="left-tittle">《超级无聊术》让你跟任何人都能聊得来 </div> <span class="fa fa-eye itext"></span> <span class="wathchnum itext">514</span> <span class="fa fa-commenting-o itext"></span> <span class="commentnum itext">21</span> <span class="fa fa-heart itext"></span> <span class="likenum itext">46</span> </div> <div class="text-img"> <img src="" alt=""> </div></li> <hr>'
+        $.ajax({
+            type:"get",
+            url:"/querypage",
+            dataType:"json",
+            success:function (str) {
+                console.log(str.result);
+
+                for (var j= 0;j<str.result.length;j++){
+                    $('.text-list').append(StrHtml);
+
+                }
+                $('.text-item').click(function () {
+                    sessionStorage.setItem('pagetitle',$(this).find('.left-tittle').text())
+                    window.location.href='/detail';
+                })
+
+//
+                var liLength = $('.text-item').length;
+                var liIndex=5;
+                if(liLength>5){
+                    for (var i=5;i<liLength;i++){
+                        $('.text-item').eq(i).css({"display":"none","opacity":0});
+                        $('.text-list').find('hr').eq(i).css({"display":"none","opacity":0});
+                    }
+                }
+                $('.more-btn').click(function () {
+                    liIndex+=5;
+                    for (var i=0;i<liIndex;i++){
+//                        $('.text-item').eq(i).css({"display":"block","opacity":1});
+                        $('.text-item').eq(i).animate({"opacity":1},500,"linear",function () {
+                            $(this).css({"display":"block"});
+                        })
+                        $('.text-list').find('hr').eq(i).animate({"opacity":1},500,"linear",function () {
+                            $(this).css({"display":"block"});
+                        })
+                    }
+                })
+
+                for (var i=0;i<liLength;i++){
+
+                    (function (i) {
+                        $.ajax({
+                            type:'get',
+                            url:"/queryuser",
+                            data:{"uid":str.result[i].uid},
+                            dataType:'json',
+                            success:function (strfn) {
+                                $('.user-img').eq(i).attr('src',/images/+strfn.result[0].userimg);
+                            }
+                        })
+                    })(i);
+                    $('.user-name').eq(i).text(str.result[i].zuozhe);
+                    $('.left-tittle').eq(i).text(str.result[i].title);
+                    $('.text-img').eq(i).find('img').attr('src',/images/+str.result[i].conimg);
+                    $('.wathchnum').eq(i).text(Math.ceil(Math.random()*1000))
+                    $('.commentnum').eq(i).text(Math.ceil(Math.random()*1000))
+                    $('.likenum').eq(i).text(Math.ceil(Math.random()*1000))
+
+                }
+            }
+        })
+
+    })
+</script>
+
+<% include footer.html %>

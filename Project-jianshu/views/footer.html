@@ -1,0 +1,69 @@
+<footer id="footer">
+ <div class="da1" style="width: 80%;margin-left: auto;margin-right: auto ;text-align: center">
+  <a href="/"><span class="fa fa-home" style="color:#e05244;"></span></a>
+ </div>
+ <div class="loginuserbox">
+    <div class="user-img ">
+     <img src="/images/user.png" alt="" id="lo-user-img">
+     <a href="###" class="sign-out"><span class="fa fa-sign-out"></span>退出</a>
+     </div>
+ </div>
+ <div class="footer">
+  <p class="sign-up-tips">没有账号？注册一个加入我们吧</p>
+  <a href="/register" id="register-btn" class="sign-up-tips">注册</a>
+  <p class="sign-up-tips">已有账号，立即登录</p>
+  <a href="/login" id="login-btn" class="sign-up-tips">登录</a>
+  <a href="" class="footer-download">
+   <span class="fa fa-download"></span>
+   下载简书，创作你的创作
+  </a>
+ </div>
+
+</footer>
+
+<script>
+ $(function () {
+     var islogin=sessionStorage.getItem('islogin');
+     var userid=sessionStorage.getItem('userid');
+
+     $('.loginuserbox').css({"display":"none","opacity":"0"});
+     $('.sign-up-tips').css({"display":"block","opacity":"1"});
+     console.log(islogin);
+     if (islogin==1){
+         $('.loginuserbox').css({"display":"block","opacity":"1"});
+         $('.sign-up-tips').css({"display":"none","opacity":"0"});
+         $.ajax({
+             type:'get',
+             url:'/setuser',
+             data:{"uid":userid},
+             dataType:"json",
+             success:function (str) {
+                 var imghtml='/images/user.png';
+                 console.log(str);
+                 if (str.result[0].userimg==null){
+                     console.log(123)
+                     $('#lo-user-img').attr('src', imghtml);
+                 }
+                 else {
+                     $('#lo-user-img').attr('src',/images/+str.result[0].userimg)
+                 }
+             }
+         })
+     }
+     $('.sign-out').click(function () {
+         sessionStorage.setItem('islogin',0);
+         sessionStorage.setItem('userid','');
+         window.location.href="/";
+         $('.loginuserbox').css({"display":"none","opacity":"0"});
+         $('.sign-up-tips').css({"display":"block","opacity":"1"});
+
+
+     })
+     $('#lo-user-img').click(function () {
+         window.location.href="home";
+     })
+ })
+</script>
+
+ </body>
+ </html>

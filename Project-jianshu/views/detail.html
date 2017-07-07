@@ -1,0 +1,68 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+<nav class="detail-nav">
+    <h1 class="detail-title">题目</h1>
+    <p class="title-box clearfix">
+
+        <img src="" alt="" id="detail-userimg">
+        <span class="detail-user">作者</span>
+
+    </p>
+    <br>
+    <div class="detail-img-box">
+        <img src="" alt="" id="detail-img">
+    </div>
+
+    <br>
+    <div class="detail-con">
+        内容
+    </div>
+    <p style="font-size: 18px;color: #ea6f5a;padding-bottom: 15px"><span class="fa fa-heart likep" style="color: #e6e6e6;font-size: 24px;margin-right: 10px"></span>喜欢该文章</p>
+</nav>
+<script>
+     $(function () {
+         $.ajax({
+             type:'get',
+             url:'/getpage',
+             data:{"title":sessionStorage.getItem('pagetitle')},
+             dataType:'json',
+             success:function (str) {
+                 console.log(str);
+                 sessionStorage.setItem('titleid',str.result[0].cid);
+                 $('.detail-title').text(str.result[0].title);
+                 $('.detail-user').text(str.result[0].zuozhe);
+                 $('.detail-img-box').find('img').attr('src',/images/+str.result[0].conimg);
+                 $('.detail-con').text(str.result[0].con);
+                 $.ajax({
+                     type:'get',
+                     url:"/queryuser",
+                     data:{"uid":str.result[0].uid},
+                     dataType:'json',
+                     success:function (strfn) {
+                         $('.title-box').find('img').attr('src',/images/+strfn.result[0].userimg);
+                     }
+                 })
+
+             }
+         })
+         $('.likep').click(function () {
+             console.log(typeof parseInt(sessionStorage.getItem('userid')));
+             console.log(typeof sessionStorage.getItem('titleid'));
+             console.log(typeof sessionStorage.getItem('pagetitle'));
+
+             $.ajax({
+                 type:"get",
+                 url:'/likepagetest',
+                 data:{"uid":parseInt(sessionStorage.getItem('userid')),"cid":parseInt(sessionStorage.getItem('titleid')),"title":sessionStorage.getItem('pagetitle')},
+                 dataType:'json',
+                 success:function (str) {
+                     console.log(str)
+                 }
+             })
+         })
+     })
+</script>
+<% include footer.html %>

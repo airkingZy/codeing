@@ -1,0 +1,78 @@
+<% include header.html %>
+<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<% include header-download.html %>
+
+<nav class="user-info">
+    <div class="user-page clearfix">
+            <div class="info-images">
+                <img id="info-img" src="/images/redeye.png" alt="">
+            </div>
+        <div class="user-chose">
+            <span class="info-name">qeq1</span>
+            <p class="revise-info">修改个人信息</p>
+        </div>
+    </div>
+    <div class="info-con">
+        <ul class="info-list clearfix">
+            <li><a href="###" class="page-chose">最新发布</a></li>
+            <li><a href="###">热门</a></li>
+            <li><a href="/writepage">写文章</a></li>
+
+
+        </ul>
+    </div>
+    <div class="wrap">
+        <ul class="warp-con">
+        </ul>
+        <p class="tips-img">
+            <img src="/images/icon_nocontent-00c423de394b9184d467f2f2a7284b54.png" alt="">
+        </p>
+        <p class="warp-tips">这里还没有内容</p>
+    </div>
+</nav>
+<script>
+    var islogin=sessionStorage.getItem('islogin');
+    var userid=sessionStorage.getItem('userid');
+    var strHtml='<li class="wrap-item"></li>'
+    if (islogin==1){
+        $.ajax({
+            type:'get',
+            url:'/setuser',
+            data:{"uid":userid},
+            dataType:"json",
+            success:function (str) {
+                console.log(str)
+                $('#info-img').attr('src',/images/+str.result[0].userimg)
+                $('.info-name').text(str.result[0].showname)
+                $.ajax({
+                    type:'get',
+                    url:'/homepage',
+                    data:{"uid":userid},
+                    dataType:"json",
+                    success:function (strfn) {
+                        console.log(strfn.result)
+                        if (strfn.result.length>0){
+                            $('.tips-img').css({"display":"none"});
+                            $('.warp-tips').css({"display":"none"});
+                            for (var i=0;i<strfn.result.length;i++){
+                                $('.warp-con').append(strHtml);
+                                $('.wrap-item').eq(i).text('《'+strfn.result[i].title+'》')
+                            }
+                        }
+                        else {
+                            $('.tips-img').css({"display":"block"});
+                            $('.warp-tips').css({"display":"block"});
+                        }
+                    }
+                })
+
+            }
+        })
+    }
+    $('.revise-info').click(function () {
+        window.location.href='/revise';
+    })
+</script>
+<% include footer.html %>
