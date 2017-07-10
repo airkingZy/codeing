@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <script>
+        window.onload=function () {
+            Vue.component('todo-item', {
+                props: ['todo'],
+                template: '<li>{{ todo.text }}</li>'
+            })
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'Hello Vue!',
+                    seen :true,
+                    todos: [
+                        { text: '学习 JavaScript' },
+                        { text: '学习 Vue' },
+                        { text: '整个牛项目' }
+                    ],
+                    groceryList: [
+                        { id: 0, text: '蔬菜' },
+                        { id: 1, text: '奶酪' },
+                        { id: 2, text: '随便其他什么人吃的东西' }
+                    ]
+                },
+                methods:{ revseMessage:function () {
+                    this.message = this.message.split('').reverse().join('')
+                },
+                    add:function () {
+                        alert(1)
+                    }
+                }
+            });
+
+
+        }
+    </script>
+</head>
+<body>
+<div id="app">
+    {{ message }}
+    <p v-if="seen">现在你看到我了</p>
+    <ol>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+        <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+
+        </todo-item>
+    </ol>
+    <input type="text" v-model="message">
+    <button v-on:click="revseMessage">逆转消息</button>
+</div>
+</body>
+</html>

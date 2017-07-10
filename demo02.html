@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./js/bootstrap.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        window.onload=function () {
+                 new Vue({
+                    el:'#box',
+                    data:{
+                        myData:[],
+                        username:'',
+                        userage:'',
+                        nowindex:-1
+                    },
+                    methods:{
+                        add:function () {
+//                            var vm = this;
+                            this.myData.push({
+                                name:this.username,
+                                age:this.userage
+                            })
+                            this.username='',
+                            this.userage=''
+                        },
+                        dele:function (ni) {
+                            if(ni==-2){
+                                this.myData=[];
+                            }
+                            else{
+                                this.myData.splice(ni,1);
+                            }
+                        }
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+    <div class="container" id="box">
+        <form action="" class="form-group">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" class="form-control" placeholder="输入用户名" v-model="username">
+            </div>
+            <div class="form-group">
+            <label for="age">年龄</label>
+            <input type="text" id="age" class="form-control" placeholder="输入年龄" v-model="userage">
+    </div>
+            <div class="">
+                <input type="button" class="btn btn-primary" value="添加" v-on:click="add()">
+                <input type="button" class="btn btn-danger" value="重置">
+            </div>
+        </form>
+        <hr>
+        <table class="table table-bordered table-hover">
+            <caption class="text-info h2 text-center">用户信息表</caption>
+            <tr class="text-center">
+                <td class="">序号</td>
+                <td class="">用户名</td>
+                <td class="">年龄</td>
+                <td class="">操作</td>
+            </tr>
+            <tr class="text-center" v-for="(value,index) in myData">
+                <td class="">{{ index+1 }}</td>
+                <td class="">{{ value.name }}</td>
+                <td class="">{{ value.age }}</td>
+                <td class="">
+                    <button class="btn btn-primary" data-target="#layer" data-toggle="modal" v-on:click="nowindex=index">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-center">
+                    <p>暂无数据……</p>
+                </td>
+            </tr>
+            <tr class="text-right">
+                <td colspan="4">
+                    <button class="btn btn-danger" data-target="#layer" data-toggle="modal" v-on:click="nowindex=-2">全部删除</button>
+                </td>
+            </tr>
+        </table>
+        <div role="dialog" class="modal fade " id="layer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="text-center">确认删除</h4>
+                    </div>
+                    <div class="modal-body">确认删除信息</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="dele(nowindex)">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
